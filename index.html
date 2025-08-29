@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,19 +9,22 @@
     <style>
         /* Global Styles */
         :root {
-            --primary: #ec4899;
-            --secondary: #8b5cf6;
+            --primary: #3b82f6;
+            --secondary: #1e40af;
+            --accent: #60a5fa;
             --dark: #0f172a;
             --darker: #020617;
             --light: #f8fafc;
             --gray: #64748b;
-            --gradient: linear-gradient(135deg, #ec4899, #8b5cf6);
+            --gradient: linear-gradient(135deg, #3b82f6, #1e40af);
+            --card-bg: rgba(15, 23, 42, 0.7);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
@@ -39,16 +43,19 @@
 
         section {
             padding: 100px 0;
+            position: relative;
         }
 
         h1, h2, h3, h4 {
             margin-bottom: 1rem;
             font-weight: 700;
+            color: var(--light);
         }
 
         h1 {
             font-size: 3.5rem;
             line-height: 1.2;
+            letter-spacing: -0.5px;
         }
 
         h2 {
@@ -72,6 +79,7 @@
         p {
             margin-bottom: 1rem;
             color: #cbd5e1;
+            font-size: 1.1rem;
         }
 
         .btn {
@@ -84,24 +92,32 @@
             cursor: pointer;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin: 10px 0;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2);
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
         }
 
         .btn-outline {
             background: transparent;
             border: 2px solid var(--primary);
             color: var(--primary);
+            box-shadow: none;
         }
 
         .btn-outline:hover {
             background: var(--primary);
             color: white;
+            transform: translateY(-4px);
+        }
+
+        .btn-sm {
+            padding: 8px 20px;
+            font-size: 0.9rem;
         }
 
         /* Header & Navigation */
@@ -111,9 +127,10 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            background: rgba(2, 6, 23, 0.9);
+            background: rgba(2, 6, 23, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
         }
 
         nav {
@@ -131,16 +148,22 @@
             font-weight: 700;
             color: white;
             text-decoration: none;
+            transition: all 0.3s ease;
         }
 
         .logo span {
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .logo i {
             color: var(--primary);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .nav-links {
@@ -152,8 +175,9 @@
             color: var(--light);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             position: relative;
+            padding: 5px 0;
         }
 
         .nav-links a:hover {
@@ -163,12 +187,12 @@
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
             background: var(--gradient);
-            transition: width 0.3s ease;
+            transition: width 0.4s ease;
         }
 
         .nav-links a:hover::after {
@@ -182,6 +206,12 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+            color: var(--primary);
         }
 
         /* Hero Section */
@@ -191,6 +221,7 @@
             align-items: center;
             position: relative;
             overflow: hidden;
+            background: linear-gradient(135deg, rgba(2, 6, 23, 0.9) 0%, rgba(15, 23, 42, 0.8) 100%);
         }
 
         .hero-content {
@@ -203,69 +234,99 @@
         }
 
         .hero-text h1 {
-            background: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4);
+            background: linear-gradient(135deg, #3b82f6, #60a5fa, #1e40af);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 1.1;
         }
 
         .hero-text p {
             font-size: 1.2rem;
             margin-bottom: 2rem;
+            max-width: 500px;
         }
 
         .hero-buttons {
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         .hero-img {
             position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-img-container {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid transparent;
+            background: var(--gradient);
+            background-clip: padding-box;
+            box-shadow: 0 25px 50px rgba(59, 130, 246, 0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-img-container::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            background: var(--darker);
+            border-radius: 50%;
+            z-index: 1;
         }
 
         .hero-img img {
             width: 100%;
-            max-width: 400px;
-            border-radius: 20px;
-            border: 3px solid transparent;
-            background: var(--gradient);
-            background-clip: padding-box;
-            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.2);
-            animation: float 6s ease-in-out infinite;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            z-index: 2;
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
         }
 
         /* Background Elements */
         .bg-shape {
             position: absolute;
-            width: 500px;
-            height: 500px;
+            opacity: 0.15;
+            filter: blur(40px);
             border-radius: 50%;
-            opacity: 0.1;
+            z-index: 1;
         }
 
         .bg-shape-1 {
-            top: -200px;
-            right: -200px;
+            width: 600px;
+            height: 600px;
+            top: -300px;
+            right: -300px;
             background: var(--primary);
-            filter: blur(100px);
         }
 
         .bg-shape-2 {
-            bottom: -200px;
-            left: -200px;
+            width: 500px;
+            height: 500px;
+            bottom: -250px;
+            left: -250px;
             background: var(--secondary);
-            filter: blur(100px);
         }
 
         /* About Section */
         #about {
-            background: rgba(15, 23, 42, 0.8);
+            background: var(--darker);
             position: relative;
+            overflow: hidden;
         }
 
         .about-content {
@@ -277,6 +338,7 @@
 
         .about-text p {
             margin-bottom: 1.5rem;
+            font-size: 1.1rem;
         }
 
         .info-item {
@@ -284,45 +346,139 @@
             align-items: flex-start;
             gap: 15px;
             margin-bottom: 20px;
+            transition: transform 0.3s ease;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .info-item:hover {
+            transform: translateX(10px);
+            background: rgba(59, 130, 246, 0.05);
         }
 
         .info-item i {
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-top: 5px;
+            min-width: 24px;
+        }
+
+        .info-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--light);
+        }
+
+        .info-item p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        .mission-vision {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .mission-vision:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.15);
+        }
+
+        .mission-vision h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .passion {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 64, 175, 0.1));
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            margin-top: 20px;
+        }
+
+        .passion h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .passion h3 i {
+            color: var(--accent);
+        }
+
+        /* Skills Section */
+        #skills {
+            background: linear-gradient(135deg, rgba(2, 6, 23, 0.95) 0%, rgba(15, 23, 42, 0.85) 100%);
         }
 
         .skills-container {
-            background: rgba(15, 23, 42, 0.5);
-            padding: 30px;
+            background: var(--card-bg);
+            padding: 40px;
             border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .skill {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .skill-name {
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .skill-name span:first-child {
+            color: var(--light);
+        }
+
+        .skill-name span:last-child {
+            color: var(--accent);
+            font-weight: 500;
         }
 
         .skill-bar {
             width: 100%;
-            height: 10px;
+            height: 12px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+            border-radius: 6px;
             overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .skill-progress {
             height: 100%;
             background: var(--gradient);
-            border-radius: 5px;
+            border-radius: 6px;
             width: 0;
-            transition: width 1.5s ease;
+            transition: width 1.8s ease;
+            position: relative;
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3) 50%, transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         /* Projects Section */
@@ -332,47 +488,79 @@
 
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
             margin-top: 50px;
         }
 
         .project-card {
-            background: rgba(15, 23, 42, 0.5);
-            border-radius: 15px;
+            background: var(--card-bg);
+            border-radius: 18px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(236, 72, 153, 0.2);
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(59, 130, 246, 0.25);
+            border-color: var(--primary);
         }
 
         .project-img {
-            height: 200px;
+            height: 220px;
             overflow: hidden;
+            position: relative;
+        }
+
+        .project-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(0deg, rgba(30, 64, 175, 0.2) 0%, transparent 100%);
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover .project-img::before {
+            opacity: 1;
         }
 
         .project-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .project-card:hover .project-img img {
-            transform: scale(1.1);
+            transform: scale(1.12);
         }
 
         .project-content {
-            padding: 20px;
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .project-content h3 {
-            margin-bottom: 10px;
-            font-size: 1.3rem;
+            margin-bottom: 12px;
+            font-size: 1.4rem;
+            color: var(--light);
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover .project-content h3 {
+            color: var(--primary);
         }
 
         .project-tags {
@@ -380,31 +568,140 @@
             flex-wrap: wrap;
             gap: 8px;
             margin: 15px 0;
+            padding-top: 10px;
         }
 
         .tag {
-            background: rgba(236, 72, 153, 0.2);
-            color: var(--primary);
-            padding: 5px 10px;
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--accent);
+            padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 500;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
         }
 
         .project-status {
             display: inline-block;
-            background: rgba(139, 92, 246, 0.2);
-            color: var(--secondary);
-            padding: 5px 15px;
+            background: rgba(96, 165, 250, 0.2);
+            color: var(--accent);
+            padding: 6px 16px;
             border-radius: 20px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 15px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .project-links {
+            margin-top: auto;
+            display: flex;
+            gap: 10px;
+            padding-top: 15px;
+        }
+
+        .project-links a {
+            flex: 1;
+        }
+
+        /* Experience Section */
+        #experience {
+            background: linear-gradient(135deg, rgba(2, 6, 23, 0.95) 0%, rgba(15, 23, 42, 0.85) 100%);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--gradient);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            padding: 20px 40px;
+            position: relative;
+            width: 50%;
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border: 4px solid var(--card-bg);
+            top: 30px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .timeline-content .date {
+            color: var(--accent);
+            font-weight: 500;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            display: block;
         }
 
         /* Contact Section */
         #contact {
-            background: rgba(15, 23, 42, 0.8);
+            background: var(--darker);
         }
 
         .contact-content {
@@ -416,31 +713,63 @@
         .contact-info {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 25px;
         }
 
         .contact-item {
             display: flex;
             align-items: flex-start;
             gap: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            background: var(--card-bg);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+            border-color: var(--primary);
         }
 
         .contact-item i {
             color: var(--primary);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-top: 3px;
+            min-width: 28px;
         }
 
         .contact-details h4 {
             margin-bottom: 5px;
             font-size: 1.1rem;
+            color: var(--light);
+        }
+
+        .contact-details p, .contact-details a {
+            margin-bottom: 0;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-details a:hover {
+            color: var(--primary);
         }
 
         .contact-form {
-            background: rgba(15, 23, 42, 0.5);
+            background: var(--card-bg);
             padding: 40px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form h3 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            text-align: center;
         }
 
         .form-group {
@@ -451,44 +780,46 @@
             display: block;
             margin-bottom: 8px;
             color: var(--light);
+            font-weight: 500;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
+            padding: 14px 18px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 10px;
+            background: rgba(59, 130, 246, 0.05);
             color: var(--light);
             font-size: 1rem;
             transition: all 0.3s ease;
+            resize: none;
         }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            background: rgba(59, 130, 246, 0.1);
         }
 
         .form-group textarea {
             min-height: 150px;
-            resize: vertical;
         }
 
         /* Footer */
         footer {
             background: var(--darker);
-            padding: 60px 0 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 80px 0 30px;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
         }
 
         .footer-content {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 50px;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .footer-logo {
@@ -499,13 +830,27 @@
 
         .footer-logo p {
             color: #94a3b8;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
         }
 
         .footer-links h3 {
             color: var(--light);
-            margin-bottom: 20px;
-            font-size: 1.2rem;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 2px;
         }
 
         .footer-links ul {
@@ -513,58 +858,87 @@
         }
 
         .footer-links ul li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .footer-links ul li a {
             color: #94a3b8;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .footer-links ul li a:hover {
             color: var(--primary);
+            transform: translateX(5px);
         }
 
         .social-links {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
+            width: 45px;
+            height: 45px;
+            background: rgba(59, 130, 246, 0.1);
             border-radius: 50%;
             color: var(--light);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
 
         .social-links a:hover {
             background: var(--primary);
-            transform: translateY(-3px);
+            color: white;
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
         }
 
         .copyright {
             text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 40px;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
             color: #94a3b8;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            margin-top: 20px;
+        }
+
+        .copyright a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .copyright a:hover {
+            text-decoration: underline;
         }
 
         /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
         }
 
         .animate {
-            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .animated {
+            animation: fadeInUp 0.8s ease forwards;
         }
 
         /* Responsive Design */
@@ -586,8 +960,28 @@
                 text-align: center;
             }
             
-            .hero-img img {
-                max-width: 300px;
+            .hero-img-container {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 21px;
+                right: auto;
             }
         }
 
@@ -609,7 +1003,10 @@
                 width: 100%;
                 background: var(--darker);
                 padding: 20px;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                border-top: 1px solid rgba(59, 130, 246, 0.2);
+                backdrop-filter: blur(10px);
+                z-index: 100;
             }
             
             .nav-links.active {
@@ -624,6 +1021,11 @@
                 flex-direction: column;
             }
             
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            
             .footer-content {
                 grid-template-columns: 1fr;
                 text-align: center;
@@ -631,6 +1033,10 @@
             
             .social-links {
                 justify-content: center;
+            }
+            
+            .contact-form {
+                padding: 30px 20px;
             }
         }
 
@@ -643,9 +1049,13 @@
                 padding: 0 15px;
             }
             
-            .btn {
-                width: 100%;
-                text-align: center;
+            .hero-img-container {
+                width: 250px;
+                height: 250px;
+            }
+            
+            section {
+                padding: 60px 0;
             }
         }
     </style>
@@ -656,13 +1066,15 @@
         <div class="container">
             <nav>
                 <a href="#" class="logo">
-                    <i class="fas fa-code"></i>
+                    <i class="fas fa-laptop-code"></i>
                     <span>Karabo</span> Divine
                 </a>
                 <div class="nav-links">
                     <a href="#hero" class="nav-link">Home</a>
                     <a href="#about" class="nav-link">About</a>
+                    <a href="#skills" class="nav-link">Skills</a>
                     <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#experience" class="nav-link">Experience</a>
                     <a href="#contact" class="nav-link">Contact</a>
                 </div>
                 <button class="mobile-menu-btn">
@@ -679,17 +1091,19 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text animate">
-                    <h1>Hello, I'm <span>Karabo Divine</span></h1>
-                    <p>Software Engineering Student passionate about creating innovative solutions and building beautiful web experiences.</p>
+                    <h1>Transforming Ideas into <span>Digital Reality</span></h1>
+                    <p>Software Engineering Student specializing in full-stack development, UI/UX design, and creating innovative web solutions that make a difference.</p>
                     <div class="hero-buttons">
-                        <a href="#contact" class="btn">Get In Touch</a>
-                        <a href="https://github.com/Karab-o" target="_blank" class="btn btn-outline">
-                            <i class="fab fa-github"></i> My GitHub
+                        <a href="#projects" class="btn">View My Work</a>
+                        <a href="#contact" class="btn btn-outline">
+                            <i class="fas fa-paper-plane"></i> Get In Touch
                         </a>
                     </div>
                 </div>
-                <div class="hero-img animate" style="animation-delay: 0.5s">
-                    <img src="profile.png" alt="Karabo Divine">
+                <div class="hero-img animate" style="animation-delay: 0.4s">
+                    <div class="hero-img-container">
+                        <img src="profile.png" alt="Karabo Divine">
+                    </div>
                 </div>
             </div>
         </div>
@@ -701,38 +1115,29 @@
             <h2 class="animate">About Me</h2>
             <div class="about-content">
                 <div class="about-text animate" style="animation-delay: 0.3s">
-                    <p>I'm a motivated and detail-oriented Software Engineering student at African Leadership University, Kigali, Rwanda. I'm seeking internship or part-time opportunities to apply my technical skills and contribute to innovative tech projects.</p>
+                    <p>I'm a motivated and detail-oriented Software Engineering student at African Leadership University, Kigali, Rwanda. With a strong foundation in both technical skills and creative problem-solving, I'm passionate about building exceptional digital experiences.</p>
                     
-                    <div class="info-item">
-                        <i class="fas fa-graduation-cap"></i>
-                        <div>
-                            <h4>Education</h4>
-                            <p>BSc. Software Engineering at African Leadership University (Expected 2024)</p>
-                        </div>
+                    <div class="mission-vision">
+                        <h3><i class="fas fa-bullseye"></i> Mission</h3>
+                        <p>To leverage my technical expertise and creative vision to develop innovative web solutions that solve real-world problems and enhance user experiences. I aim to bridge the gap between functionality and aesthetics in every project I undertake.</p>
                     </div>
                     
-                    <div class="info-item">
-                        <i class="fas fa-briefcase"></i>
-                        <div>
-                            <h4>Experience</h4>
-                            <p>Affiliate Marketing Agent at KRAFT Company (June 2025 - Present)</p>
-                        </div>
+                    <div class="mission-vision">
+                        <h3><i class="fas fa-eye"></i> Vision</h3>
+                        <p>To become a leading full-stack developer and UI/UX designer, creating digital products that not only meet technical requirements but also inspire and delight users. I envision building a career where technology and creativity converge to make a positive impact.</p>
                     </div>
                     
-                    <div class="info-item">
-                        <i class="fas fa-language"></i>
-                        <div>
-                            <h4>Languages</h4>
-                            <p>Fluent in English; Basic proficiency in additional foreign languages</p>
-                        </div>
+                    <div class="passion">
+                        <h3><i class="fas fa-heart"></i> My Passion</h3>
+                        <p>I'm deeply passionate about website development and UI/UX designing. I believe that exceptional digital products combine technical excellence with intuitive design. I enjoy creating seamless user experiences that are both beautiful and functional, always focusing on user-centered design principles.</p>
                     </div>
                 </div>
                 
                 <div class="skills-container animate" style="animation-delay: 0.6s">
-                    <h3>My Skills</h3>
+                    <h3>Core Competencies</h3>
                     <div class="skill">
                         <div class="skill-name">
-                            <span>HTML & CSS</span>
+                            <span>Frontend Development</span>
                             <span>90%</span>
                         </div>
                         <div class="skill-bar">
@@ -742,7 +1147,7 @@
                     
                     <div class="skill">
                         <div class="skill-name">
-                            <span>JavaScript</span>
+                            <span>UI/UX Design</span>
                             <span>85%</span>
                         </div>
                         <div class="skill-bar">
@@ -752,7 +1157,7 @@
                     
                     <div class="skill">
                         <div class="skill-name">
-                            <span>Python</span>
+                            <span>JavaScript & Frameworks</span>
                             <span>80%</span>
                         </div>
                         <div class="skill-bar">
@@ -762,7 +1167,7 @@
                     
                     <div class="skill">
                         <div class="skill-name">
-                            <span>Java</span>
+                            <span>Python & Backend</span>
                             <span>75%</span>
                         </div>
                         <div class="skill-bar">
@@ -772,7 +1177,7 @@
                     
                     <div class="skill">
                         <div class="skill-name">
-                            <span>C++</span>
+                            <span>Java & C++</span>
                             <span>70%</span>
                         </div>
                         <div class="skill-bar">
@@ -782,7 +1187,7 @@
                     
                     <div class="skill">
                         <div class="skill-name">
-                            <span>SQL & Linux</span>
+                            <span>Database & Linux</span>
                             <span>65%</span>
                         </div>
                         <div class="skill-bar">
@@ -794,65 +1199,146 @@
         </div>
     </section>
 
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="animate">Technical Expertise</h2>
+            <div class="skills-container animate" style="animation-delay: 0.3s">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="text-align: center; padding: 20px; background: rgba(59, 130, 246, 0.05); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.1);">
+                        <i class="fab fa-html5" style="font-size: 2.5rem; color: #f16529; margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--primary); margin-bottom: 10px;">HTML5</h3>
+                        <p>Structuring content with semantic markup and modern web standards</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 20px; background: rgba(59, 130, 246, 0.05); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.1);">
+                        <i class="fab fa-css3-alt" style="font-size: 2.5rem; color: #264de4; margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--primary); margin-bottom: 10px;">CSS3</h3>
+                        <p>Creating responsive layouts with advanced styling and animations</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 20px; background: rgba(59, 130, 246, 0.05); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.1);">
+                        <i class="fab fa-js" style="font-size: 2.5rem; color: #f7df1e; color: #f0db4f; margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--primary); margin-bottom: 10px;">JavaScript</h3>
+                        <p>Building interactive web applications with modern ES6+ features</p>
+                    </div>
+                    
+                    <div style="text-align: center; padding: 20px; background: rgba(59, 130, 246, 0.05); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.1);">
+                        <i class="fab fa-python" style="font-size: 2.5rem; color: #3776ab; margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--primary); margin-bottom: 10px;">Python</h3>
+                        <p>Developing applications with clean, efficient code and automation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Projects Section -->
     <section id="projects">
         <div class="container">
-            <h2 class="animate">My Projects</h2>
+            <h2 class="animate">Featured Projects</h2>
             <div class="projects-grid">
                 <div class="project-card animate" style="animation-delay: 0.3s">
                     <div class="project-img">
-                        <img src="https://placehold.co/400x300/8B5CF6/FFFFFF?text=Fleur+Chocolate" alt="Fleur Chocolate Website">
+                        <img src="fleur-screenshot.jpg" alt="Fleur Chocolate Website">
                     </div>
                     <div class="project-content">
                         <span class="project-status">Work in Progress</span>
                         <h3>Fleur Chocolate Website</h3>
-                        <p>A responsive e-commerce website for a premium chocolate brand with modern design and user-friendly interface.</p>
+                        <p>A responsive e-commerce website for a premium chocolate brand featuring modern design, user-friendly interface, and seamless shopping experience.</p>
                         <div class="project-tags">
                             <span class="tag">HTML</span>
                             <span class="tag">CSS</span>
                             <span class="tag">JavaScript</span>
+                            <span class="tag">UI/UX</span>
                         </div>
-                        <a href="https://github.com/Karab-o/Fleur" target="_blank" class="btn btn-outline">
-                            <i class="fab fa-github"></i> View Code
-                        </a>
+                        <div class="project-links">
+                            <a href="https://github.com/Karab-o/Fleur" target="_blank" class="btn btn-outline btn-sm">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a href="#" class="btn btn-sm">
+                                <i class="fas fa-external-link-alt"></i> Live Demo
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="project-card animate" style="animation-delay: 0.5s">
                     <div class="project-img">
-                        <img src="https://placehold.co/400x300/EC4899/FFFFFF?text=Marketing+Dashboard" alt="Affiliate Marketing Dashboard">
+                        <img src="https://placehold.co/600x400/1E40AF/FFFFFF?text=UI+Design+System" alt="UI Design System">
                     </div>
                     <div class="project-content">
                         <span class="project-status">Completed</span>
-                        <h3>Affiliate Marketing Dashboard</h3>
-                        <p>A comprehensive dashboard for tracking affiliate marketing performance and conversion metrics.</p>
+                        <h3>UI Design System</h3>
+                        <p>A comprehensive design system with reusable components, typography guidelines, and color palette for consistent user experiences across applications.</p>
                         <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">SQL</span>
-                            <span class="tag">Web Dev</span>
+                            <span class="tag">UI/UX</span>
+                            <span class="tag">Figma</span>
+                            <span class="tag">Design</span>
+                            <span class="tag">Prototyping</span>
                         </div>
-                        <a href="#" class="btn btn-outline">
-                            <i class="fab fa-github"></i> View Code
-                        </a>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                <i class="fas fa-external-link-alt"></i> Case Study
+                            </a>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="project-card animate" style="animation-delay: 0.7s">
                     <div class="project-img">
-                        <img src="https://placehold.co/400x300/10B981/FFFFFF?text=Student+System" alt="Student Management System">
+                        <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Student+Portal" alt="Student Management System">
                     </div>
                     <div class="project-content">
                         <span class="project-status">Completed</span>
-                        <h3>Student Management System</h3>
-                        <p>A web application for managing student records and academic performance.</p>
+                        <h3>Student Portal</h3>
+                        <p>A full-stack web application for managing student records, academic performance, and administrative tasks with secure authentication.</p>
                         <div class="project-tags">
                             <span class="tag">Java</span>
                             <span class="tag">SQL</span>
                             <span class="tag">HTML/CSS</span>
+                            <span class="tag">Backend</span>
                         </div>
-                        <a href="#" class="btn btn-outline">
-                            <i class="fab fa-github"></i> View Code
-                        </a>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-outline btn-sm">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <h2 class="animate">Professional Journey</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content animated">
+                        <h3>Software Engineering Student</h3>
+                        <span class="date">2021 - Present</span>
+                        <p>Currently pursuing a BSc in Software Engineering at African Leadership University with a focus on web development, UI/UX design, and full-stack technologies. Engaged in hands-on projects that combine technical skills with creative problem-solving.</p>
+                        <p>Relevant Coursework: Frontend Web Development, Enterprise Web Development, Introduction to Linux Tools, UI/UX Design Principles</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content animated" style="animation-delay: 0.2s">
+                        <h3>Affiliate Marketing Agent</h3>
+                        <span class="date">June 2025 - Present</span>
+                        <p>Promoted products and elevated brand presence through strategic marketing campaigns. Provided actionable ideas to optimize marketing efforts and increase conversion rates by 25%.</p>
+                        <p>Maintained transparency in affiliate relationships with clients while developing data-driven marketing strategies. Gained valuable experience in digital marketing and customer engagement.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content animated" style="animation-delay: 0.4s">
+                        <h3>Web Development Intern</h3>
+                        <span class="date">Summer 2024</span>
+                        <p>Collaborated with senior developers on client projects, gaining hands-on experience with modern web technologies and development workflows.</p>
+                        <p>Contributed to the development of responsive websites and web applications, learning best practices in code organization, version control, and team collaboration.</p>
                     </div>
                 </div>
             </div>
@@ -862,7 +1348,7 @@
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
-            <h2 class="animate">Get In Touch</h2>
+            <h2 class="animate">Let's Connect</h2>
             <div class="contact-content">
                 <div class="contact-info animate" style="animation-delay: 0.3s">
                     <div class="contact-item">
@@ -877,7 +1363,7 @@
                         <i class="fas fa-phone"></i>
                         <div class="contact-details">
                             <h4>Phone</h4>
-                            <p>+250 792 104 513</p>
+                            <p><a href="tel:+250792104513">+250 792 104 513</a></p>
                         </div>
                     </div>
                     
@@ -885,7 +1371,7 @@
                         <i class="fas fa-envelope"></i>
                         <div class="contact-details">
                             <h4>Email</h4>
-                            <p>contact@munyananakai.com</p>
+                            <p><a href="mailto:contact@munyananakai.com">contact@munyananakai.com</a></p>
                         </div>
                     </div>
                     
@@ -893,26 +1379,40 @@
                         <i class="fab fa-github"></i>
                         <div class="contact-details">
                             <h4>GitHub</h4>
-                            <p>github.com/Karab-o</p>
+                            <p><a href="https://github.com/Karab-o" target="_blank">github.com/Karab-o</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <div class="contact-details">
+                            <h4>Portfolio</h4>
+                            <p><a href="https://karab-o.github.io/ma-portfolio" target="_blank">karab-o.github.io/ma-portfolio</a></p>
                         </div>
                     </div>
                 </div>
                 
                 <div class="contact-form animate" style="animation-delay: 0.6s">
+                    <h3>Send Me a Message</h3>
                     <form id="contactForm">
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" placeholder="Your Name" required>
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" placeholder="Enter your full name" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" placeholder="Your Email" required>
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="Enter your email" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" placeholder="Your Message" required></textarea>
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" placeholder="What's this regarding?">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Message</label>
+                            <textarea id="message" placeholder="Tell me about your project or opportunity..." required></textarea>
                         </div>
                         
                         <button type="submit" class="btn">
@@ -930,50 +1430,54 @@
             <div class="footer-content">
                 <div class="footer-logo">
                     <a href="#" class="logo">
-                        <i class="fas fa-code"></i>
+                        <i class="fas fa-laptop-code"></i>
                         <span>Karabo</span> Divine
                     </a>
-                    <p>Software Engineering Student passionate about creating innovative solutions and building beautiful web experiences.</p>
+                    <p>A passionate Software Engineering student dedicated to creating innovative web solutions and exceptional user experiences through the perfect blend of technology and design.</p>
                     <div class="social-links">
                         <a href="https://github.com/Karab-o" target="_blank"><i class="fab fa-github"></i></a>
                         <a href="mailto:contact@munyananakai.com"><i class="fas fa-envelope"></i></a>
                         <a href="tel:+250792104513"><i class="fas fa-phone"></i></a>
+                        <a href="https://linkedin.com/in/karabo-divine" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-links">
-                    <h3>Quick Links</h3>
+                    <h3>Navigation</h3>
                     <ul>
-                        <li><a href="#hero">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#hero"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-right"></i> About</a></li>
+                        <li><a href="#skills"><i class="fas fa-chevron-right"></i> Skills</a></li>
+                        <li><a href="#projects"><i class="fas fa-chevron-right"></i> Projects</a></li>
+                        <li><a href="#experience"><i class="fas fa-chevron-right"></i> Experience</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
                     <h3>Skills</h3>
                     <ul>
-                        <li><a href="#">HTML & CSS</a></li>
-                        <li><a href="#">JavaScript</a></li>
-                        <li><a href="#">Python</a></li>
-                        <li><a href="#">Java</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Web Development</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> UI/UX Design</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Frontend Development</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> JavaScript</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Python</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-links">
                     <h3>Projects</h3>
                     <ul>
-                        <li><a href="https://github.com/Karab-o/Fleur">Fleur Chocolate</a></li>
-                        <li><a href="#">Marketing Dashboard</a></li>
-                        <li><a href="#">Student System</a></li>
-                        <li><a href="https://github.com/Karab-o">All Projects</a></li>
+                        <li><a href="https://github.com/Karab-o/Fleur"><i class="fas fa-chevron-right"></i> Fleur Chocolate</a></li>
+                        <li><a href="https://github.com/Karab-o"><i class="fas fa-chevron-right"></i> GitHub Profile</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> UI Design System</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Student Portal</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact Me</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2025 Karabo Divine. All Rights Reserved.</p>
+                <p>&copy; <span id="year">2025</span> Karabo Divine. All Rights Reserved. Crafted with <i class="fas fa-heart" style="color: #ec4899;"></i> for innovation.</p>
             </div>
         </div>
     </footer>
@@ -1013,21 +1517,25 @@
         // Animation on Scroll
         const animateElements = document.querySelectorAll('.animate');
         
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
                     entry.target.style.opacity = 1;
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, {
-            threshold: 0.1
-        });
+        }, observerOptions);
         
         animateElements.forEach(el => {
             el.style.opacity = 0;
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
             observer.observe(el);
         });
         
@@ -1059,11 +1567,12 @@
             
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value || 'Portfolio Inquiry';
             const message = document.getElementById('message').value;
             
             // In a real application, you would send this data to a server
             // For now, we'll just show an alert
-            alert(`Thank you ${name}! Your message has been sent. I'll get back to you soon.`);
+            alert(`Thank you ${name}! Your message has been sent successfully. I'll get back to you within 24 hours regarding "${subject}".`);
             
             contactForm.reset();
         });
@@ -1073,12 +1582,29 @@
         
         window.addEventListener('scroll', () => {
             if (window.scrollY > 100) {
-                header.style.background = 'rgba(2, 6, 23, 0.95)';
-                header.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+                header.style.background = 'rgba(2, 6, 23, 0.98)';
+                header.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
             } else {
-                header.style.background = 'rgba(2, 6, 23, 0.9)';
+                header.style.background = 'rgba(2, 6, 23, 0.95)';
                 header.style.boxShadow = 'none';
             }
+        });
+        
+        // Update Year in Footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Timeline Animation
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        timelineItems.forEach(item => {
+            timelineObserver.observe(item);
         });
         
         // Initialize animations
@@ -1091,3 +1617,4 @@
     </script>
 </body>
 </html>
+```
