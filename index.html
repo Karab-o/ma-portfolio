@@ -808,6 +808,90 @@
             min-height: 150px;
         }
 
+        /* Quote Section */
+        #quote {
+            background: linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-text {
+            font-size: 2rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            color: var(--light);
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .quote-text::before,
+        .quote-text::after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--primary);
+            opacity: 0.3;
+            position: absolute;
+            line-height: 1;
+        }
+
+        .quote-text::before {
+            top: -20px;
+            left: 0;
+        }
+
+        .quote-text::after {
+            bottom: -50px;
+            right: 0;
+        }
+
+        .quote-author {
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Opportunities Section */
+        #opportunities {
+            background: var(--darker);
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .opportunities-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .opportunities-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .opportunities-text {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .opportunities-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
         /* Footer */
         footer {
             background: var(--darker);
@@ -1038,6 +1122,10 @@
             .contact-form {
                 padding: 30px 20px;
             }
+            
+            .quote-text {
+                font-size: 1.5rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1057,6 +1145,15 @@
             section {
                 padding: 60px 0;
             }
+            
+            .quote-text {
+                font-size: 1.2rem;
+            }
+            
+            .opportunities-btns {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
@@ -1075,6 +1172,7 @@
                     <a href="#skills" class="nav-link">Skills</a>
                     <a href="#projects" class="nav-link">Projects</a>
                     <a href="#experience" class="nav-link">Experience</a>
+                    <a href="#opportunities" class="nav-link">Opportunities</a>
                     <a href="#contact" class="nav-link">Contact</a>
                 </div>
                 <button class="mobile-menu-btn">
@@ -1265,12 +1363,12 @@
                 
                 <div class="project-card animate" style="animation-delay: 0.5s">
                     <div class="project-img">
-                        <img src="https://placehold.co/600x400/1E40AF/FFFFFF?text=UI+Design+System" alt="UI Design System">
+                        <img src="lumo.avif" alt="Lumora Application">
                     </div>
                     <div class="project-content">
                         <span class="project-status">Completed</span>
-                        <h3>UI Design System</h3>
-                        <p>A comprehensive design system with reusable components, typography guidelines, and color palette for consistent user experiences across applications.</p>
+                        <h3>Lumora</h3>
+                        <p>An innovative wellness application that integrates mindfulness practices with personalized health tracking, designed to enhance mental well-being through intuitive user experiences.</p>
                         <div class="project-tags">
                             <span class="tag">UI/UX</span>
                             <span class="tag">Figma</span>
@@ -1287,17 +1385,17 @@
                 
                 <div class="project-card animate" style="animation-delay: 0.7s">
                     <div class="project-img">
-                        <img src="https://placehold.co/600x400/3B82F6/FFFFFF?text=Student+Portal" alt="Student Management System">
+                        <img src="k.jpg" alt="TechMap Platform">
                     </div>
                     <div class="project-content">
                         <span class="project-status">Completed</span>
-                        <h3>Student Portal</h3>
-                        <p>A full-stack web application for managing student records, academic performance, and administrative tasks with secure authentication.</p>
+                        <h3>TechMap</h3>
+                        <p>A collaborative educational platform developed as a joint assignment with colleagues, mapping technology concepts and skills for effective learning pathways.</p>
                         <div class="project-tags">
-                            <span class="tag">Java</span>
-                            <span class="tag">SQL</span>
-                            <span class="tag">HTML/CSS</span>
-                            <span class="tag">Backend</span>
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Collaboration</span>
+                            <span class="tag">Team Project</span>
                         </div>
                         <div class="project-links">
                             <a href="#" class="btn btn-outline btn-sm">
@@ -1340,6 +1438,41 @@
                         <p>Collaborated with senior developers on client projects, gaining hands-on experience with modern web technologies and development workflows.</p>
                         <p>Contributed to the development of responsive websites and web applications, learning best practices in code organization, version control, and team collaboration.</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section id="quote">
+        <div class="container">
+            <div class="quote-container">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-left" style="font-size: 4rem; color: rgba(59, 130, 246, 0.2);"></i>
+                </div>
+                <p class="quote-text">Intelligence is not just about knowing, but about creating solutions that transform the world around us. The true measure of intelligence is found in our ability to make complex things simple and inaccessible things available to all.</p>
+                <p class="quote-author">— Karabo Divine</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Opportunities Section -->
+    <section id="opportunities">
+        <div class="container">
+            <div class="opportunities-container">
+                <div class="opportunities-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h2>Open to Opportunities</h2>
+                <p class="opportunities-text">I'm actively seeking internship and part-time opportunities where I can apply my technical skills in software engineering, web development, and UI/UX design. I'm passionate about creating digital experiences that are not only functional but also enjoyable and accessible for everyone.</p>
+                <p class="opportunities-text">I'm committed to making this web experience enjoyable for everyone, focusing on user-centered design principles and inclusive development practices. Let's collaborate to create innovative solutions that make a difference.</p>
+                <div class="opportunities-btns">
+                    <a href="#contact" class="btn">
+                        <i class="fas fa-briefcase"></i> Discuss Opportunities
+                    </a>
+                    <a href="https://github.com/Karab-o" target="_blank" class="btn btn-outline">
+                        <i class="fab fa-github"></i> View My Work
+                    </a>
                 </div>
             </div>
         </div>
@@ -1450,6 +1583,7 @@
                         <li><a href="#skills"><i class="fas fa-chevron-right"></i> Skills</a></li>
                         <li><a href="#projects"><i class="fas fa-chevron-right"></i> Projects</a></li>
                         <li><a href="#experience"><i class="fas fa-chevron-right"></i> Experience</a></li>
+                        <li><a href="#opportunities"><i class="fas fa-chevron-right"></i> Opportunities</a></li>
                     </ul>
                 </div>
                 
@@ -1468,9 +1602,9 @@
                     <h3>Projects</h3>
                     <ul>
                         <li><a href="https://github.com/Karab-o/Fleur"><i class="fas fa-chevron-right"></i> Fleur Chocolate</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Lumora App</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> TechMap Platform</a></li>
                         <li><a href="https://github.com/Karab-o"><i class="fas fa-chevron-right"></i> GitHub Profile</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> UI Design System</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Student Portal</a></li>
                         <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact Me</a></li>
                     </ul>
                 </div>
